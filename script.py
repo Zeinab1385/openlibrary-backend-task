@@ -1,55 +1,98 @@
-import requests
+"""
+This script fetches books about Python from the Open Library API,
+filters books published after 2000, and saves the data to a CSV file.
+"""
+
+from typing import List, Dict, Any
 import csv
+import requests
+from requests.adapters import HTTPAdapter, Retry
 
-#API_URL = "https://openlibrary.org/search.json?q=programming&limit=50"
 API_URL = "https://openlibrary.org/search.json?q=python&limit=58"
-#API_URL = "https://openlibrary.org/search/authors.json?q=twain&limit=50"
 OUTPUT_FILE = "books.csv"
+TIMEOUT = 10  # seconds
 
 
-def fetch_books():
-    response = requests.get(API_URL)
-    response.raise_for_status()
-    data = response.json()
-    return data["docs"]
+def fetch_books() -> List[Dict[str, Any]]:
+    """
+    Fetch books from the Open Library API with retry mechanism.
 
-    
-def filter_books(books):
-    filtered = []
+    Returns:
+        List of book dictionaries from the API response.
+    """
+    session = requests.Session()
+    retries = Retry(
+        total=3,
+        backoff_factor=1,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["GET"],
+    )
+    session.mount("https://", HTTPAdapter(max_retries=retries))
 
-    for book in books:
-        year = book.get("first_publish_year")
-
-        if year and year > 2000:
-            filtered.append({
-                "title": book.get('title'),
-                "language": ",".join(book.get('language', [])),
-                "publish_year": book.get('first_publish_year'),
-                "ebook_access": book.get('ebook_access'),
-                "edition_count": book.get('edition_count'),
-                "author": ",".join(book.get('author_name', [])),
-
-            })
-
-    return filtered
-
-def save_to_csv(requested_books):
-    with open("books.csv", "w", newline="", encoding="utf-8") as csvfile:
-        csvfile.write(f"{'Title':<75}{'Language':<30}"
-                    f"{'Publish Year':<15}{'Ebook Access':<25}"
-                    f"{'Edition Count':<15}{'Author'}\n")
-        csvfile.write("-" * 180 + "\n")
-
-        for book in requested_books:
-            csvfile.write(f"{book['title']:<75}"
-                    f"{book['language']:<30}{book['publish_year']:<15}"
-                    f"{str(book['ebook_access']):<25}"
-                    f"{book['edition_count']:<15}{book['author']}\n")
-        csvfile.close()
+    try:
+        response = session.get(API_URL, timeout=TIMEOUT)
+        response.raise_for_status()
+        data = response.json()
+        return data.get("docs", [])
+    except requests.RequestException as error:
+        print(f"Error fetching books: {error}")
+        return []
 
 
-def main():
+def filter_books(books: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Filter books published after the year 2000 and format for CSV.
+
+    Args:
+        books: List of book dictionaries.
+
+    Returns:
+        List of filtered and formatted book dictionaries.
+    """
+    return [
+        {
+            "title": book.get("title", "N/A"),
+            "language": ",".join(book.get("language", [])),
+            "publish_year": book.get("first_publish_year", "N/A"),
+            "ebook_access": book.get("ebook_access", "N/A"),
+            "edition_count": book.get("edition_count", 0),
+            "author": ",".join(book.get("author_name", [])),
+        }
+        for book in books
+        if book.get("first_publish_year") and book["first_publish_year"] > 2000
+    ]
+
+
+def save_to_csv(books: List[Dict[str, Any]]) -> None:
+    """
+    Save filtered books to a CSV file using csv.DictWriter.
+
+    Args:
+        books: List of filtered book dictionaries.
+    """
+    with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as csvfile:
+        writer = csv.DictWriter(
+            csvfile,
+            fieldnames=[
+                "title",
+                "language",
+                "publish_year",
+                "ebook_access",
+                "edition_count",
+                "author",
+            ],
+        )
+        writer.writeheader()
+        writer.writerows(books)
+
+
+def main() -> None:
+    """Main function to fetch, filter, and save books."""
     books = fetch_books()
+    if not books:
+        print("No books fetched. Exiting.")
+        return
+
     filtered_books = filter_books(books)
     save_to_csv(filtered_books)
     print(f"{len(filtered_books)} books saved to {OUTPUT_FILE}")

@@ -1,14 +1,14 @@
-\# OpenLibrary Books Script
+# OpenLibrary Books Script
 
 
 
-\## Description
+## Description
 
 This script fetches 50 books from the OpenLibrary API, filters books published after 2000, and saves them into a CSV file.
 
 
 
-\## Requirements
+## Requirements
 
 Python 3
 
@@ -16,19 +16,19 @@ requests
 
 
 
-\## Installation
+## Installation
 
 pip install requests
 
 
 
-\## Usage
+## Usage
 
 python script.py
 
 
 
-\## Output
+## Output
 
 books.csv
 

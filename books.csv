@@ -1,4 +1,52 @@
-title,author,year
-The Boy in the Striped Pyjamas,John Boyne,2006
-The Hunger Games,Suzanne Collins,2008
-Catching Fire,Suzanne Collins,2009
+Title                                                                      Language                      Publish Year   Ebook Access             Edition Count  Author
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Python Cookbook                                                            eng                           2002           borrowable               7              Alex Martelli,David Ascher,David M. Beazley,Brian K. Jones
+Fluent Python                                                              eng                           2015           borrowable               6              Luciano Ramalho
+Core Python Programming                                                    hin,eng                       2016           no_ebook                 5              R. Nageswara Rao
+Black Hat Python                                                           eng,pol                       2014           borrowable               3              Justin Seitz,Tim Arnold
+Think Python                                                               eng                           2009           public                   11             Allen B. Downey,Allen Downey
+Python                                                                     eng                           2017           no_ebook                 1              Joshua Welsh
+Python For Data Analysis                                                   eng                           2012           unclassified             8              Wes McKinney
+Automate the Boring Stuff with Python                                      eng,chi                       2015           public                   8              Al Sweigart
+Python Crash Course, 3rd Edition                                           eng                           2022           no_ebook                 1              Eric Matthes
+Introduction to Machine Learning with Python                               eng                           2016           printdisabled            2              Andreas C. Mueller,Sarah Guido
+Data science from scratch                                                  eng                           2015           borrowable               4              Joel Grus
+Core Python programming                                                    eng                           2006           printdisabled            2              Wesley Chun
+Python Crash Course, 2nd Edition                                           eng                           2019           no_ebook                 1              Eric Matthes
+Python crash course                                                        eng                           2015           printdisabled            2              Eric Matthes
+The Hidden Oracle                                                          pol,spa,tur,eng,cat,por,ger   2016           printdisabled            36             Rick Riordan
+Python                                                                     eng                           2001           no_ebook                 3              Martin C. Brown
+Python Data Science Handbook                                               eng                           2016           borrowable               2              Jake VanderPlas
+Practical Statistics for Data Scientists: 50 Essential Concepts            eng                           2017           borrowable               2              Peter Bruce,Andrew Bruce,Peter Gedeck
+Python Playground                                                          eng                           2015           printdisabled            2              Mahesh Venkitachalam
+The Burning Maze                                                           eng,spa,cat,pol,tur,por       2018           printdisabled            22             Rick Riordan
+My Favorite Animal                                                         eng                           2014           no_ebook                 90             Victoria Marcos
+Python Basics                                                              eng                           2021           no_ebook                 1              David Amos,Dan Bader,Joanna Jablonski,Fletcher Heisler
+Data Science                                                               eng                           2022           no_ebook                 6              Tiffany-Anne Timbers,Trevor Campbell,Melissa Lee
+Python                                                                     eng                           2016           borrowable               1              Byron Francis
+Head First Python                                                          ger,chi,eng                   2010           borrowable               9              Paul Barry
+Beginning Python                                                           eng                           2010           unclassified             6              James R. Payne
+Python Distilled                                                           eng                           2021           no_ebook                 3              David M. Beazley
+Python Programming                                                         eng                           2019           no_ebook                 2              Reema Thareja
+Django for Beginners                                                       eng                           2018           no_ebook                 4              William S. Vincent
+Python for Everybody                                                       eng                           2016           printdisabled            1              Dr. Charles Russell Severance
+Effective Python                                                           eng                           2015           no_ebook                 8              Brett Slatkin
+Pythons' Autobiography by the Pythons                                      eng,und                       2003           borrowable               18             Monty Python,Graham Chapman,John Cleese,Terry Gilliam,Eric Idle,Terry Jones,Michael Palin,et al,Bob McCabe
+Python for dummies                                                         eng                           2006           printdisabled            5              Stef Maruch,Aahz Maruch
+Python                                                                     eng                           2018           no_ebook                 10             Martin Evans
+Python Basics                                                              eng                           2019           public                   1              
+Garden Planting Weekly                                                     eng                           2022           no_ebook                 90             Yoshiko TOLBERT
+Starting out with Python                                                   eng                           2008           printdisabled            4              Tony Gaddis
+Deep Learning with Python                                                  eng                           2017           no_ebook                 2              Francois Chollet
+Data Structures and Algorithms in Python                                   eng                           2012           no_ebook                 3              Michael T. Goodrich,Roberto Tamassia,Michael H Goldwasser
+Python in a Nutshell                                                       eng                           2002           borrowable               8              Alex Martelli,Anna Ravenscroft,Steve Holden
+PYTHON Exercises                                                           eng                           2021           no_ebook                 1              Ray Yao
+Python programming                                                         eng                           2003           borrowable               2              John M. Zelle
+Let Us Python                                                              eng                           2019           no_ebook                 2              Yashavant Kanetkar
+Python for Kids                                                            eng                           2012           borrowable               4              Jason R. Briggs
+Python machine learning                                                    eng                           2015           printdisabled            4              Sebastian Raschka
+Python                                                                     eng                           2021           no_ebook                 2              Andy Vickler
+Python for Geeks                                                           eng                           2021           no_ebook                 2              Muhammad Asif
+Intro to Python                                                            eng                           2020           no_ebook                 1              Programming For Scientists
+Python Programming Crash Course                                            eng                           2022           no_ebook                 1              Alex Jaxson
+Python Programming                                                                                       2019           no_ebook                 1              Sarah Stewart

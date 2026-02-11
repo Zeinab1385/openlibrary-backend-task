@@ -1,15 +1,16 @@
 <div align="center">
 
 # 📚 OpenLibrary Backend Task
-### 🔎 Python Data Fetching • API Integration • Structured CSV Export
+### 🔎 Python API Integration • Data Processing • CSV Export • Backend Workflow
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
-![Backend](https://img.shields.io/badge/Focus-Backend%20Practice-purple.svg)
+![Backend](https://img.shields.io/badge/Focus-Backend-purple.svg)
 ![API](https://img.shields.io/badge/API-OpenLibrary-orange.svg)
 ![Data](https://img.shields.io/badge/Data-Processing-green.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
+![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 
-A backend-oriented Python project that fetches real-world book data from the Open Library API, filters modern publications, and exports structured results into a clean, formatted CSV dataset.
+A **mentor-ready, portfolio-level** Python project demonstrating a complete backend workflow: fetching, filtering, transforming, and exporting book data from the Open Library API into a clean CSV file.
 
 </div>
 
@@ -17,49 +18,39 @@ A backend-oriented Python project that fetches real-world book data from the Ope
 
 ## ✨ Project Overview
 
-This project simulates a small backend data-processing workflow:
+**OpenLibrary Backend Task** is a realistic backend data pipeline project illustrating:
 
-1. Fetch live book data from an external REST API
-2. Validate and filter records based on business logic
-3. Transform raw JSON into structured datasets
-4. Export results into a readable CSV file
+1. Fetching live book data from OpenLibrary REST API.
+2. Validating and filtering records based on business rules (books published after 2000).
+3. Transforming JSON responses into structured datasets.
+4. Exporting clean, human-readable CSV files.
+5. Writing modular and maintainable Python code suitable for production-level backend tasks.
 
-The main goal is to demonstrate practical backend development skills including API communication, data processing, and clean scripting.
-
----
-
-## 🎯 Key Learning Objectives
-
-- Working with external REST APIs
-- Handling JSON responses
-- Writing clean and modular Python functions
-- Data filtering & transformation
-- Structured file output
-- Backend-style scripting workflows
+**Goal:** Showcase practical backend and data processing skills for real-world projects and portfolio demonstration.
 
 ---
 
-## ⚙️ How It Works
+## 🧩 Features
 
-### 1️⃣ Data Fetching
-The script sends an HTTP request to the OpenLibrary Search API and retrieves book data related to Python programming.
+- 🌐 Fetch live book data from OpenLibrary API
+- 🧠 Filter books published after 2000
+- 📊 Extract essential information:
+  - Title
+  - Language
+  - Publish Year
+  - Ebook Access
+  - Edition Count
+  - Author Names
+- 🧾 Export results in a readable CSV file (`books.csv`)
+- ⚡ Lightweight, modular, and reusable code
+- 🔧 Fully customizable queries and filters
 
-### 2️⃣ Data Filtering
-Books are filtered based on:
+---
 
-- Availability of publish year
-- Published after the year **2000**
+## 🏗 Architecture & Workflow
 
-### 3️⃣ Data Transformation
-Each valid record is transformed into a structured format containing:
-
-- Title
-- Language
-- First Publish Year
-- Ebook Access Status
-- Edition Count
-- Author Names
-
-### 4️⃣ Data Export
-Filtered results are exported into a formatted CSV file:
-
+```mermaid
+flowchart LR
+    A[Fetch Books from OpenLibrary API] --> B[Validate & Filter Data]
+    B --> C[Transform JSON to Structured Format]
+    C --> D[Export Clean CSV File]

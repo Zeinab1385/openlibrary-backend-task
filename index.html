@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeinab Hosein Nejad | Portfolio</title>
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<style>
+/* ---------- Base ---------- */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Outfit',sans-serif;
+  background:#0a0f1e;
+  color:#e2e8f0;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ---------- Particle Background ---------- */
+#particles-js{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:-2;
+}
+
+/* Gradient Animated Overlay */
+body::before{
+  content:"";
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:linear-gradient(120deg,#2563eb55,#7c3aed55,#60a5fa44,#a78bfa44);
+  background-size:400% 400%;
+  animation:gradientBG 20s ease infinite;
+  z-index:-1;
+}
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* ---------- Navbar ---------- */
+nav{
+  position:fixed;
+  width:100%;
+  padding:20px 50px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(15,23,42,0.5);
+  backdrop-filter:blur(14px);
+  z-index:1000;
+}
+nav a{
+  text-decoration:none;
+  color:#e2e8f0;
+  margin-left:25px;
+  font-weight:500;
+  transition:.3s;
+}
+nav a:hover{color:#60a5fa; transform:scale(1.1);}
+nav .brand{font-weight:700;font-size:22px;color:#60a5fa;}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:120px 20px;
+}
+.hero h1{
+  font-size:64px;
+  font-weight:800;
+  background:linear-gradient(90deg,#60a5fa,#a78bfa);
+  -webkit-background-clip:text;
+  color:transparent;
+  margin-bottom:20px;
+  animation:fadeInUp 1s ease forwards;
+}
+.hero p{
+  max-width:700px;
+  line-height:1.8;
+  font-size:18px;
+  color:#cbd5e1;
+  animation:fadeInUp 1.3s ease forwards;
+}
+.hero .socials{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  margin-top:30px;
+  animation:fadeInUp 1.6s ease forwards;
+}
+.hero .socials a{
+  color:white;
+  font-size:28px;
+  transition:.3s;
+}
+.hero .socials a:hover{color:#60a5fa; transform:scale(1.3);}
+.hero .btn{
+  display:inline-block;
+  margin-top:30px;
+  padding:16px 28px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  font-weight:600;
+  text-decoration:none;
+  transition:.3s;
+}
+.hero .btn:hover{
+  transform:translateY(-5px) scale(1.05) rotate(-1deg);
+  box-shadow:0 10px 25px rgba(124,58,237,0.6);
+}
+
+/* ---------- Sections ---------- */
+.section{
+  max-width:1100px;
+  margin:auto;
+  padding:90px 20px;
+}
+.section h2{
+  text-align:center;
+  font-size:40px;
+  margin-bottom:45px;
+  color:#60a5fa;
+  position:relative;
+}
+.section h2::after{
+  content:"";
+  display:block;
+  width:80px;
+  height:4px;
+  background:#60a5fa;
+  margin:12px auto 0 auto;
+  border-radius:2px;
+}
+
+/* ---------- Glass Cards ---------- */
+.card{
+  background:rgba(255,255,255,0.05);
+  border-radius:24px;
+  padding:40px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 40px 80px rgba(0,0,0,0.5);
+  transition:.4s;
+}
+.card:hover{
+  transform:translateY(-15px) scale(1.02);
+}
+
+/* ---------- Skills ---------- */
+.skills{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+}
+.skill{
+  padding:18px 28px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#1d4ed8,#7c3aed);
+  font-weight:600;
+  transition:.3s;
+}
+.skill:hover{
+  transform:scale(1.15) rotate(-2deg);
+  box-shadow:0 0 30px #7c3aed88;
+}
+
+/* ---------- Projects ---------- */
+.projects{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:30px;
+}
+.project-card{
+  background:rgba(255,255,255,0.05);
+  border-radius:25px;
+  overflow:hidden;
+  backdrop-filter:blur(20px);
+  box-shadow:0 30px 60px rgba(0,0,0,0.6);
+  transition:.5s;
+  transform-style:preserve-3d;
+}
+.project-card img{
+  width:100%;
+  display:block;
+  transform:translateZ(0);
+}
+.project-card .info{
+  padding:25px;
+}
+.project-card h3{margin-bottom:12px;color:#60a5fa;}
+.project-card p{line-height:1.6;color:#cbd5e1;}
+.project-card:hover{
+  transform:translateY(-15px) rotateY(5deg) scale(1.03);
+  box-shadow:0 20px 50px rgba(124,58,237,0.7);
+}
+
+/* ---------- Contact ---------- */
+.contact{
+  text-align:center;
+}
+.contact a{
+  display:inline-block;
+  margin:15px;
+  padding:14px 28px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  font-weight:600;
+  border-radius:14px;
+  text-decoration:none;
+  transition:.3s;
+}
+.contact a:hover{
+  transform:scale(1.1) rotate(-2deg);
+  box-shadow:0 8px 25px rgba(124,58,237,0.7);
+}
+
+/* ---------- Footer ---------- */
+footer{
+  text-align:center;
+  padding:60px;
+  color:#94a3b8;
+  background:rgba(0,0,0,0.2);
+}
+
+/* ---------- Animations ---------- */
+.fade{
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+.fade.show{
+  opacity:1;
+  transform:translateY(0);
+}
+@keyframes fadeInUp{
+  0%{opacity:0;transform:translateY(40px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+
+/* ---------- Responsive ---------- */
+@media(max-width:768px){
+  .hero h1{font-size:48px;}
+  nav{padding:15px 25px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Particle Background -->
+<div id="particles-js"></div>
+
+<!-- Navbar -->
+<nav>
+  <div class="brand">Zeinab</div>
+  <div>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>Zeinab Hosein Nejad</h1>
+  <p>Computer Engineering undergraduate passionate about web development, software engineering, and AI. Continuously building skills to become a professional developer.</p>
+  <div class="socials">
+    <a href="https://github.com/Zeinab1385" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://www.linkedin.com/in/zeinab-hosein-nejad/" target="_blank"><i class="fab fa-linkedin"></i></a>
+  </div>
+  <a class="btn" href="#" download="Zeinab_Hosein_Nejad_Resume.pdf">Download CV</a>
+</section>
+
+<!-- About -->
+<section id="about" class="section fade">
+  <h2>About Me</h2>
+  <div class="card">
+    <p>Fourth-semester Computer Engineering student with strong interest in front-end and back-end development. Skilled in intermediate C++, HTML & CSS, basic Python, and introductory AI concepts. Highly motivated, fast learner, passionate about building modern user experiences.</p>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="section fade">
+  <h2>Skills</h2>
+  <div class="card">
+    <div class="skills">
+      <div class="skill">HTML</div>
+      <div class="skill">CSS</div>
+      <div class="skill">Python (Basic)</div>
+      <div class="skill">C++ (Intermediate)</div>
+      <div class="skill">AI Concepts</div>
+      <div class="skill">Web Development</div>
+      <div class="skill">Git & GitHub</div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="section fade">
+  <h2>Projects</h2>
+  <div class="projects">
+    <div class="project-card">
+      <img src="https://via.placeholder.com/400x200" alt="Project 1">
+      <div class="info">
+        <h3>Project One</h3>
+        <p>Modern web application demonstrating responsive design and interactive UI components using HTML, CSS & JS.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <img src="https://via.placeholder.com/400x200" alt="Project 2">
+      <div class="info">
+        <h3>Project Two</h3>
+        <p>AI-based Python project exploring introductory machine learning concepts and data visualization.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <img src="https://via.placeholder.com/400x200" alt="Project 3">
+      <div class="info">
+        <h3>Project Three</h3>
+        <p>C++ project demonstrating intermediate-level algorithms and object-oriented programming skills.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section fade">
+  <h2>Contact</h2>
+  <div class="contact">
+    <a href="mailto:zeinab@example.com">Email Me</a>
+    <a href="https://www.linkedin.com/in/zeinab-hosein-nejad/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Zeinab1385" target="_blank">GitHub</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  © 2026 Zeinab Hosein Nejad — Professional Portfolio
+</footer>
+
+<!-- JS Scroll Animation -->
+<script>
+const faders=document.querySelectorAll('.fade');
+const appear=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('show');}
+  });
+});
+faders.forEach(el=>appear.observe(el));
+</script>
+
+<!-- Particle.js -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+particlesJS("particles-js", {
+  "particles": {
+    "number": {"value":60,"density":{"enable":true,"value_area":800}},
+    "color":{"value":"#60a5fa"},
+    "shape":{"type":"circle"},
+    "opacity":{"value":0.5,"random":true},
+    "size":{"value":3,"random":true},
+    "line_linked":{"enable":true,"distance":150,"color":"#7c3aed","opacity":0.4,"width":1},
+    "move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"bounce":false}
+  },
+  "interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"}},"modes":{"repulse":{"distance":100},"push":{"particles_nb":4}}},
+  "retina_detect":true
+});
+</script>
+</body>
+</html>

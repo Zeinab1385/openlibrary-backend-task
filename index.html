@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookFlow AI | Quantum Data Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700;900&display=swap');
+        :root { --neon: #a855f7; --cyan: #00f2ff; --bg: #020617; }
+        body { font-family: 'Vazirmatn', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
+
+        /* نوار پیشرفت متحرک بالا */
+        #top-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--neon), var(--cyan)); width: 0%; z-index: 1000; transition: width 0.3s; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0; transform: translateY(20px);
+        }
+
+        .glass-card.visible { opacity: 1; transform: translateY(0); }
+        .glass-card:hover { transform: scale(1.04); border-color: var(--cyan); box-shadow: 0 0 30px rgba(0, 242, 255, 0.15); }
+
+        .tag-btn {
+            padding: 6px 16px; border-radius: 50px; background: rgba(255,255,255,0.05);
+            font-size: 10px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: 0.3s;
+        }
+        .tag-btn:hover { background: var(--neon); border-color: var(--neon); box-shadow: 0 0 15px var(--neon); }
+
+        .history-chip { font-size: 9px; color: var(--cyan); border: 1px solid var(--cyan); padding: 2px 8px; border-radius: 4px; cursor: pointer; opacity: 0.6; }
+        .history-chip:hover { opacity: 1; background: rgba(0,242,255,0.1); }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+    <div id="top-progress"></div>
+
+    <div class="max-w-7xl mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                    <i class="fas fa-atom text-purple-500 animate-spin-slow"></i>
+                </div>
+                <h1 class="text-3xl font-black tracking-tighter uppercase">Quantum<span class="text-cyan-400">Library</span></h1>
+            </div>
+            <button onclick="exportToCSV()" class="glass-card px-6 py-2.5 text-[10px] font-bold tracking-widest uppercase hover:bg-white/5 opacity-100 transform-none">
+                Export Data
+            </button>
+        </header>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+            <div class="glass-card p-6 visible transform-none">
+                <p class="text-[9px] text-slate-500 uppercase mb-1">Data Scanned</p>
+                <h3 id="statTotal" class="text-2xl font-black">0</h3>
+            </div>
+            <div class="glass-card p-6 visible transform-none border-b-2 border-purple-500">
+                <p class="text-[9px] text-slate-500 uppercase mb-1">Post-2000 Docs</p>
+                <h3 id="statModern" class="text-2xl font-black text-purple-400">0</h3>
+            </div>
+            <div class="glass-card p-6 visible transform-none border-b-2 border-cyan-500">
+                <p class="text-[9px] text-slate-500 uppercase mb-1">Latency</p>
+                <h3 class="text-2xl font-black text-cyan-400">24ms</h3>
+            </div>
+            <div class="glass-card p-6 visible transform-none">
+                <p class="text-[9px] text-slate-500 uppercase mb-1">AI Protocol</p>
+                <h3 class="text-2xl font-black text-emerald-400 font-mono">ACTIVE</h3>
+            </div>
+        </div>
+
+        <div class="max-w-3xl mx-auto mb-8">
+            <div class="relative group">
+                <input type="text" id="liveSearch" oninput="debounceSearch()" 
+                       class="w-full bg-white/5 border border-white/10 p-6 pr-14 rounded-3xl outline-none text-xl focus:border-cyan-500 transition-all shadow-2xl"
+                       placeholder="کلمه کلیدی برای تحلیل لایه‌ها...">
+                <i class="fas fa-search absolute right-6 top-7 text-white/20 group-focus-within:text-cyan-400"></i>
+            </div>
+            <div id="historyBox" class="flex flex-wrap gap-2 mt-4"></div>
+            <div class="flex flex-wrap gap-3 mt-6 justify-center">
+                <button class="tag-btn" onclick="quickSearch('Python')"># Python</button>
+                <button class="tag-btn" onclick="quickSearch('Deep Learning')"># AI</button>
+                <button class="tag-btn" onclick="quickSearch('Space')"># Space</button>
+                <button class="tag-btn" onclick="quickSearch('History')"># History</button>
+                <button class="tag-btn" onclick="quickSearch('Fiction')"># Fiction</button>
+            </div>
+        </div>
+
+        <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="col-span-full text-center py-20 text-slate-700 font-bold uppercase tracking-widest animate-pulse italic">
+                Scanning for incoming data streams...
+            </div>
+        </div>
+    </div>
+
+    <div id="portal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/95 backdrop-blur-2xl">
+        <div class="glass-card max-w-4xl w-full p-2 flex flex-col md:flex-row overflow-hidden visible transform-none opacity-100">
+            <div class="md:w-1/3 bg-white/5 p-8 flex items-center justify-center">
+                <img id="pImg" src="" class="rounded-xl shadow-2xl shadow-cyan-500/10">
+            </div>
+            <div class="md:w-2/3 p-10 flex flex-col">
+                <h2 id="pTitle" class="text-3xl font-black text-cyan-400 mb-6 leading-tight"></h2>
+                <div class="flex-1 overflow-y-auto custom-scroll pr-4 mb-8">
+                    <p id="pDesc" class="text-slate-400 leading-relaxed text-sm italic"></p>
+                </div>
+                <div class="flex gap-4">
+                    <a id="pLink" target="_blank" class="flex-1 text-center py-4 bg-white/5 border border-white/10 rounded-2xl font-black text-[10px] hover:bg-white/10 tracking-widest uppercase">
+                        Source Node
+                    </a>
+                    <button onclick="closePortal()" class="flex-1 bg-cyan-600 py-4 rounded-2xl font-black text-[10px] tracking-widest hover:bg-cyan-500 transition-all uppercase">
+                        Close Portal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let books = [];
+        let history = new Set();
+
+        function debounceSearch() {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                const q = document.getElementById('liveSearch').value;
+                if(q.length > 2) executeSearch(q);
+            }, 600);
+        }
+
+        function quickSearch(tag) {
+            document.getElementById('liveSearch').value = tag;
+            executeSearch(tag);
+        }
+
+        async function executeSearch(query) {
+            const grid = document.getElementById('grid');
+            const prog = document.getElementById('top-progress');
+            
+            prog.style.width = '30%';
+            grid.innerHTML = '<div class="col-span-full text-center py-20 text-cyan-500 font-black animate-pulse uppercase">Accessing Database...</div>';
+            
+            // Add to history
+            history.add(query);
+            renderHistory();
+
+            try {
+                const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=24`);
+                prog.style.width = '70%';
+                const data = await res.json();
+                books = data.docs;
+                
+                prog.style.width = '100%';
+                setTimeout(() => prog.style.width = '0%', 400);
+
+                updateStats(books);
+                renderGrid(books);
+            } catch (e) {
+                grid.innerHTML = "Offline Connection.";
+                prog.style.width = '0%';
+            }
+        }
+
+        function renderHistory() {
+            const box = document.getElementById('historyBox');
+            box.innerHTML = Array.from(history).slice(-5).map(h => `<span class="history-chip" onclick="quickSearch('${h}')">${h}</span>`).join('');
+        }
+
+        function updateStats(data) {
+            document.getElementById('statTotal').innerText = data.length;
+            document.getElementById('statModern').innerText = data.filter(b => b.first_publish_year > 2000).length;
+        }
+
+        function renderGrid(data) {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = data.map((b, i) => `
+                <div class="glass-card p-5 group cursor-pointer" style="transition-delay: ${i * 50}ms" onclick="showPortal('${b.key}', '${b.title.replace(/'/g, "")}', '${b.cover_i}')">
+                    <div class="h-48 bg-white/5 rounded-xl mb-4 overflow-hidden relative">
+                        <img src="${b.cover_i ? `https://covers.openlibrary.org/b/id/${b.cover_i}-M.jpg` : 'https://via.placeholder.com/200x300/000/fff?text=NO+DATA'}" 
+                             class="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h3 class="font-bold text-[11px] truncate mb-2 text-slate-200">${b.title}</h3>
+                    <div class="flex justify-between items-center text-[9px] font-bold text-slate-600">
+                        <span>${b.first_publish_year || '---'}</span>
+                        <span class="text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity uppercase">Inspect</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Trigger animation
+            setTimeout(() => {
+                document.querySelectorAll('.glass-card').forEach(el => el.classList.add('visible'));
+            }, 100);
+        }
+
+        async function showPortal(key, title, cover) {
+            const portal = document.getElementById('portal');
+            document.getElementById('pTitle').innerText = title;
+            document.getElementById('pImg').src = cover !== 'undefined' ? `https://covers.openlibrary.org/b/id/${cover}-L.jpg` : 'https://via.placeholder.com/400x600/020617/fff?text=NO+IMAGE';
+            document.getElementById('pDesc').innerText = "Decrypting Information Stream...";
+            document.getElementById('pLink').href = `https://openlibrary.org${key}`;
+            
+            portal.classList.replace('hidden', 'flex');
+
+            try {
+                const res = await fetch(`https://openlibrary.org${key}.json`);
+                const data = await res.json();
+                document.getElementById('pDesc').innerText = typeof data.description === 'string' ? data.description : (data.description?.value || "توضیحات تکمیلی یافت نشد.");
+            } catch (e) { document.getElementById('pDesc').innerText = "Data Integrity Error."; }
+        }
+
+        function closePortal() { document.getElementById('portal').classList.replace('flex', 'hidden'); }
+
+        function exportToCSV() {
+            if(!books.length) return;
+            const content = "Title,Year,Author\n" + books.map(b => `"${b.title}",${b.first_publish_year},"${b.author_name?.[0]}"`).join("\n");
+            const blob = new Blob([content], {type: 'text/csv'});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Quantum_Report.csv'; a.click();
+        }
+    </script>
+</body>
+</html>

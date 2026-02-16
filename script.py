@@ -3,7 +3,7 @@ This script fetches books about Python from the Open Library API,
 filters books published after 2000, and saves the data to a CSV file.
 """
 
-from typing import List, Dict, Any
+from typing import List, TypedDict
 import csv
 import requests
 from requests.adapters import HTTPAdapter, Retry
@@ -13,7 +13,27 @@ OUTPUT_FILE = "books.csv"
 TIMEOUT = 10  # seconds
 
 
-def fetch_books() -> List[Dict[str, Any]]:
+# ساختار داده‌ای که از API میاد
+class BookAPIResponse(TypedDict, total=False):
+    title: str
+    language: List[str]
+    first_publish_year: int
+    ebook_access: str
+    edition_count: int
+    author_name: List[str]
+
+
+# ساختار داده‌ای که برای CSV آماده می‌کنیم
+class FilteredBook(TypedDict):
+    title: str
+    language: str
+    publish_year: int | str
+    ebook_access: str
+    edition_count: int
+    author: str
+
+
+def fetch_books() -> List[BookAPIResponse]:
     """
     Fetch books from the Open Library API with retry mechanism.
 
@@ -39,15 +59,9 @@ def fetch_books() -> List[Dict[str, Any]]:
         return []
 
 
-def filter_books(books: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def filter_books(books: List[BookAPIResponse]) -> List[FilteredBook]:
     """
     Filter books published after the year 2000 and format for CSV.
-
-    Args:
-        books: List of book dictionaries.
-
-    Returns:
-        List of filtered and formatted book dictionaries.
     """
     return [
         {
@@ -63,12 +77,9 @@ def filter_books(books: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     ]
 
 
-def save_to_csv(books: List[Dict[str, Any]]) -> None:
+def save_to_csv(books: List[FilteredBook]) -> None:
     """
     Save filtered books to a CSV file using csv.DictWriter.
-
-    Args:
-        books: List of filtered book dictionaries.
     """
     with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(
